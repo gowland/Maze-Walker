@@ -1,16 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3D5F2077-38A3-4F66-94CF-2A9FF330BF33}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{3303008B-EF81-427E-B763-E3A9DC6D62B6}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MazeSolver</RootNamespace>
-    <AssemblyName>MazeSolver</AssemblyName>
+    <RootNamespace>ThirdPartyLogic</RootNamespace>
+    <AssemblyName>ThirdPartyLogic</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,9 +30,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -39,42 +37,16 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConversionExtensions\DirectionExtensions.cs" />
-    <Compile Include="ConversionExtensions\OrientationExtensions.cs" />
-    <Compile Include="MazeWalker.cs" />
-    <Compile Include="IWalkerStateDumper.cs" />
-    <Compile Include="MazeGrid.cs" />
-    <Compile Include="MazeApp.cs" />
-    <Compile Include="MazeSolver.cs" />
-    <Compile Include="MazeVisualDumper.cs" />
-    <Compile Include="Orientation.cs" />
-    <Compile Include="Point.cs" />
+    <Compile Include="AdvancedMazeSolver.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="Direction.cs" />
+    <Compile Include="IMazeTraverser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="MazeFiles\maze1.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MazeFiles\maze2.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MazeFiles\points1.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ThirdPartyLogic\ThirdPartyLogic.csproj">
-      <Project>{3303008B-EF81-427E-B763-E3A9DC6D62B6}</Project>
-      <Name>ThirdPartyLogic</Name>
-    </ProjectReference>
+    <Compile Include="ThirdPartyPoint.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
