@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdvancedMazeSolver.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="Direction.cs" />
     <Compile Include="IMazeTraverser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
