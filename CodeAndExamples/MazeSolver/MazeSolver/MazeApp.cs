@@ -40,14 +40,15 @@ namespace MazeSolver
              * We have an upcoming requirment to support multiple formats for maze input. In preparation, apply the Builder pattern to the maze creation logic.
              * Rewrite the input to accept input in the form given in MazeFiles/points1.txt
              */
-            mazeApp.Run(@"MazeFiles\maze1.txt");
+            mazeApp.Run(@"MazeFiles\points1.txt");
             Console.ReadLine();
         }
 
         private void Run(string mazeFilePath)
         {
 //            MazeGrid maze = GetMaze(mazeFilePath);
-            MazeGrid maze = GetMaze2(mazeFilePath);
+//            MazeGrid maze = GetMaze2(mazeFilePath);
+            MazeGrid maze = GetMaze3(mazeFilePath);
 
             IWalkerStateDumper dumper = new BlandWalkerStateDumper();
 //            IWalkerStateDumper dumper = new FancyWalkerStateDumper(MazeVisualDumper, maze);
@@ -78,9 +79,21 @@ namespace MazeSolver
                 return this;
             }
 
+            public MazeApp.MazeBuilder WithStartPoint(Point p)
+            {
+                _start = p;
+                return this;
+            }
+
             public MazeApp.MazeBuilder WithEndPoint(int x, int y)
             {
                 _end = new Point(x, y);
+                return this;
+            }
+
+            public MazeApp.MazeBuilder WithEndPoint(Point p)
+            {
+                _end = p;
                 return this;
             }
 
@@ -90,9 +103,21 @@ namespace MazeSolver
                 return this;
             }
 
+            public MazeApp.MazeBuilder WithClosedPoint(Point p)
+            {
+                _closedPoints.Add(p);
+                return this;
+            }
+
             public MazeApp.MazeBuilder WithOpenPoint(int x, int y)
             {
                 _openPoints.Add(new Point(x, y));
+                return this;
+            }
+
+            public MazeApp.MazeBuilder WithOpenPoint(Point p)
+            {
+                _openPoints.Add(p);
                 return this;
             }
 
@@ -141,6 +166,61 @@ namespace MazeSolver
 
                 return grid;
             }
+        }
+
+        // TODO: Delete
+        private static MazeGrid GetMaze3(string mazeFilePath)
+        {
+            var lines = new StreamReader(new FileStream(mazeFilePath, FileMode.Open)).ReadToEnd().Replace(" ", "")
+                .Split(new[] {Environment.NewLine}, StringSplitOptions.None);
+
+            var builder = new MazeApp.MazeBuilder();
+            char currentState = ' ';
+
+            foreach (var line in lines)
+            {
+                if (line == "#Walls")
+                {
+                    currentState = '#';
+                }
+                else if (line == "#Open")
+                {
+                    currentState = '.';
+                }
+                else if (line == "#Start")
+                {
+                    currentState = 'S';
+                }
+                else if (line == "#Finish")
+                {
+                    currentState = 'F';
+                }
+                else
+                {
+                    var point = Point.FromString(line);
+
+                    switch (currentState)
+                    {
+                        case '#':
+                            builder.WithClosedPoint(point);
+                            break;
+                        case 'S':
+                            builder.WithStartPoint(point);
+                            break;
+                        case 'F':
+                            builder.WithEndPoint(point);
+                            break;
+                        case '.':
+                            builder.WithOpenPoint(point);
+                            break;
+                        default:
+                            // NOP
+                            break;
+                    }
+                }
+            }
+
+            return builder.Build();
         }
 
         // TODO: Delete

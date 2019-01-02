@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using ThirdPartyLogic;
 
 namespace MazeSolver
@@ -65,6 +67,28 @@ namespace MazeSolver
             }
 
             return desiredPoint;
+        }
+
+        public static Point FromString(string pointAsText)
+        {
+            var coords = StringsToInts(pointAsText.Split(',')).ToList();
+            if (coords.Count == 2)
+            {
+                return new Point(coords[0], coords[1]);
+            }
+
+            throw new ArgumentException($"{pointAsText} is not a valid point");
+        }
+
+        private static IEnumerable<int> StringsToInts(IEnumerable<string> intsAsText)
+        {
+            foreach (string intAsText in intsAsText)
+            {
+                if (int.TryParse(intAsText, out int result))
+                {
+                    yield return result;
+                }
+            }
         }
 
         public static implicit operator ThirdPartyPoint(Point point)

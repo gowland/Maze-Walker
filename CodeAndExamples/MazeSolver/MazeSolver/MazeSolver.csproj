@@ -61,7 +61,9 @@
     <Content Include="MazeFiles\maze2.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="MazeFiles\points1.txt" />
+    <Content Include="MazeFiles\points1.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ThirdPartyLogic\ThirdPartyLogic.csproj">
